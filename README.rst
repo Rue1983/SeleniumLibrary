@@ -8,11 +8,8 @@ Introduction
 This is Personal fork of SeleniumLibrary. Added new keywords to get performance and network logs from chrome driver.
 Examples:
 
-.. code:: robotframework
-
 ${perf_log}=    Get log    performance
 ${network_log}=    get network log
-
 
 ------------
 SeleniumLibrary_ is a web testing library for `Robot Framework`_ that
