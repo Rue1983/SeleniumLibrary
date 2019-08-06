@@ -359,6 +359,29 @@ class BrowserManagementKeywords(LibraryComponent):
         return self.driver.session_id
 
     @keyword
+    def get_log(self, log_type):
+        """Get the log for a given selenium log type
+        The `log_type` argument defines which logs to get. Possible values are:
+        `browser`, `driver`, `performance`.
+        ${perfLoggingPrefs}=    create dictionary    enableNetwork=${True}
+        log dictionary    ${perfLoggingPrefs}
+        ${chromeOptions}=    create dictionary    perfLoggingPrefs=${perfLoggingPrefs}
+        log dictionary    ${chromeOptions}
+        ${loggingPrefs}=    create dictionary    performance=ALL
+        ${desiredCapabilities}=    create dictionary    loggingPrefs=${loggingPrefs}
+        Open Browser    ${CI_URL}    browser=${BROWSER}    desired_capabilities=${desiredCapabilities}    chrome_options=${chromeOptions}
+
+        New in SeleniumLibrary 3.0
+        """
+        return self.driver.get_log(log_type)
+
+    @keyword
+    def get_network_log(self):
+        script_to_execute = "var performance = window.performance || window.mozPerformance || window.msPerformance || window.webkitPerformance || {}; var network = performance.getEntries() || {}; return network;"
+        log = self.driver.execute_script(script_to_execute)
+        return log
+
+    @keyword
     def get_source(self):
         """Returns the entire HTML source of the current page or frame."""
         return self.driver.page_source
